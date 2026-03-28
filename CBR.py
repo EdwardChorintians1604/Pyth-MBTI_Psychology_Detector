@@ -17,7 +17,7 @@ def get_db_connection():
         user=st.secrets["db_user"],
         password=st.secrets["db_password"],
         database=st.secrets["db_database"],
-        port=3306,
+        port=st.secrets["db_port"],
         connection_timeout=10
     )
     
