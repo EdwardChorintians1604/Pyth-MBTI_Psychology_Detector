@@ -13,19 +13,21 @@ from datetime import datetime
 
 def get_db_connection():
     return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
+        host="mysql-19feb42d-samaloisaerantusparipurna-5624.j.aivencloud.com",
+        user="avnadmin",
+        port="26686",
+        password="AVNS_enXC0xhhyqqDVq6z4Pa",
         database="mbti_db"
     )
-
+    
 @st.cache_resource
 def init_db():
-    base_conn = mysql.connector.connect(host="localhost", user="root", password="")
+    base_conn = mysql.connector.connect(host="mysql-19feb42d-samaloisaerantusparipurna-5624.j.aivencloud.com", user="avnadmin", port="26686", password="AVNS_enXC0xhhyqqDVq6z4Pa")
     base_cursor = base_conn.cursor()
     base_cursor.execute("CREATE DATABASE IF NOT EXISTS mbti_db")
     base_cursor.close()
     base_conn.close()
+
 
     conn = get_db_connection()
     c = conn.cursor(buffered=True)
