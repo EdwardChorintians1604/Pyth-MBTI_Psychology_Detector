@@ -23,13 +23,6 @@ def get_db_connection():
     
 @st.cache_resource
 def init_db():
-    base_conn = init_db()
-    base_cursor = base_conn.cursor()
-    base_cursor.execute("CREATE DATABASE IF NOT EXISTS mbti_db")
-    base_cursor.close()
-    base_conn.close()
-
-
     conn = get_db_connection()
     c = conn.cursor(buffered=True)
     
@@ -86,7 +79,7 @@ def init_db():
         conn.commit()
         
     c.close()
-    conn.close()
+    return conn
 
 def get_mbti_info_db():
     try:
