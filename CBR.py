@@ -13,11 +13,11 @@ from datetime import datetime
 
 def get_db_connection():
     return mysql.connector.connect(
-        host="mysql-19feb42d-samaloisaerantusparipurna-5624.j.aivencloud.com",
-        user="avnadmin",
-        port="26686",
-        password="AVNS_enXC0xhhyqqDVq6z4Pa",
-        database="mbti_db"
+       host=st.secrets["db_host"],
+        user=st.secrets["db_user"],
+        password=st.secrets["db_password"],
+        database=st.secrets["db_database"],
+        port=st.secrets['db_port']
     )
     
 @st.cache_resource
