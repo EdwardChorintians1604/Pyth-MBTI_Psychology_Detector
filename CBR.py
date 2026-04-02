@@ -417,7 +417,23 @@ def show_radar_chart(user_scores, mbti_type):
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     </head>
     <body style="background-color: transparent; margin: 0; padding: 0; overflow: hidden;">
-        <div style="width: 100%; height: 420px; display: flex; justify-content: center; align-items: center;">
+        <style>
+            .chart-wrapper { width: 100%; height: 420px; display: flex; justify-content: center; align-items: center; 
+            }
+            @media (max-width: 600px) {
+                .chart-wrapper { 
+                    width: 100%; 
+                    height: 320px; 
+                    display: flex; 
+                    justify-content: center; 
+                    align-items: center; 
+                }
+                .chart-anvas { 
+                    max-width: 100% !important; height: auto !important; 
+                }
+            }
+        </style>
+        <div class="chart-wrapper">
             <canvas id="chart"></canvas>
         </div>
         <script>
@@ -486,6 +502,36 @@ def main():
     }
     @media (max-width: 992px) {
         .main .block-container { padding: 2rem 1.5rem !important; }
+    }
+
+    /* ── Penambahan Responsivitas Layout ── */
+    @media (max-width: 768px) {
+        h1 { font-size: 1.8rem !important; }
+        h2 { font-size: 1.4rem !important; }
+        h3 { font-size: 1.2rem !important; }
+        
+        .main .block-container {
+            padding: 1.5rem 1rem !important;
+        }
+
+        /* Kartu Hero Hasil MBTI */
+        .hero-result-card {
+            padding: 25px 15px !important;
+            margin-bottom: 20px !important;
+        }
+        .hero-result-card h1 {
+            font-size: 3.5rem !important;
+        }
+        .hero-result-card h2 {
+            font-size: 1.5rem !important;
+        }
+        
+        /* Kotak Info di Tab Beranda */
+        .info-card-responsive {
+            height: auto !important;
+            min-height: 150px !important;
+            margin-bottom: 12px !important;
+        }
     }
 
     /* ── Headings ── */
@@ -737,7 +783,7 @@ def main():
             col1, col2, col3 = st.columns(3)
             with col1:
                 st.markdown("""
-                <div style="background:#161b22; border-radius:14px; padding:8px; border:1px solid #30363d; text-align:center; height:180px;">
+                <div class="info-card-responsive" style="background:#161b22; border-radius:14px; padding:8px; border:1px solid #30363d; text-align:center; height:180px;">
                     <div style="font-size:2.2rem; margin-bottom:10px;">🧪</div>
                     <div style="font-weight:800; font-size:16px; color:#40E0D0; margin-bottom:8px;">Tes Kepribadian</div>
                     <div style="color:#8b949e; font-size:14px; line-height:1.6;">4 pertanyaan slider untuk menentukan tipe MBTI-mu <br> </div>
@@ -746,7 +792,7 @@ def main():
                 """, unsafe_allow_html=True)
             with col2:
                 st.markdown("""
-                <div style="background:#161b22; border-radius:14px; padding:8px; border:1px solid #30363d; text-align:center; height:180px;">
+                <div class="info-card-responsive" style="background:#161b22; border-radius:14px; padding:8px; border:1px solid #30363d; text-align:center; height:180px;">
                     <div style="font-size:2.2rem; margin-bottom:10px;">📡</div>
                     <div style="font-weight:800; font-size:16px; color:#40E0D0; margin-bottom:8px;">Algoritma CBR</div>
                     <div style="color:#8b949e; font-size:14px; line-height:1.6;">Mencocokkan jawabanmu dengan 16 prototype MBTI <br> </div>
@@ -755,7 +801,7 @@ def main():
                 """, unsafe_allow_html=True)
             with col3:
                 st.markdown("""
-                <div style="background:#161b22; border-radius:14px; padding:8px; border:1px solid #30363d; text-align:center; height:180px;">
+                <div class="info-card-responsive" style="background:#161b22; border-radius:14px; padding:8px; border:1px solid #30363d; text-align:center; height:180px;">
                     <div style="font-size:2.2rem; margin-bottom:10px;">📥</div>
                     <div style="font-weight:800; font-size:16px; color:#40E0D0; margin-bottom:8px;">Download PDF</div>
                     <div style="color:#8b949e; font-size:14px; line-height:1.6;">Simpan hasil analisis kepribadianmu sebagai laporan <br> </div>
@@ -767,7 +813,7 @@ def main():
             col4, col5, col6 = st.columns(3)
             with col4:
                 st.markdown("""
-                <div style="background:#161b22; border-radius:14px; padding:8px; border:1px solid #30363d; text-align:center; height:180px;">
+                <div class="info-card-responsive" style="background:#161b22; border-radius:14px; padding:8px; border:1px solid #30363d; text-align:center; height:180px;">
                     <div style="font-size:2.2rem; margin-bottom:10px;">📊</div>
                     <div style="font-weight:800; font-size:16px; color:#40E0D0; margin-bottom:8px;">Radar Chart</div>
                     <div style="color:#8b949e; font-size:14px; line-height:1.6;">Visualisasi hasil dalam bentuk grafik radar interaktif <br></div>
@@ -776,7 +822,7 @@ def main():
                 """, unsafe_allow_html=True)
             with col5:
                 st.markdown("""
-                <div style="background:#161b22; border-radius:14px; padding:8px; border:1px solid #30363d; text-align:center; height:180px;">
+                <div class="info-card-responsive" style="background:#161b22; border-radius:14px; padding:8px; border:1px solid #30363d; text-align:center; height:180px;">
                     <div style="font-size:2.2rem; margin-bottom:10px;">📚</div>
                     <div style="font-weight:800; font-size:16px; color:#40E0D0; margin-bottom:8px;">16 Tipe MBTI</div>
                     <div style="color:#8b949e; font-size:14px; line-height:1.6;">Pelajari semua tipe kepribadian beserta kelebihan & profesinya<br></div>
@@ -785,7 +831,7 @@ def main():
                 """, unsafe_allow_html=True)
             with col6:
                 st.markdown("""
-                <div style="background:#161b22; border-radius:14px; padding:8px; border:1px solid #30363d; text-align:center; height:180px;">
+                <div class="info-card-responsive" style="background:#161b22; border-radius:14px; padding:8px; border:1px solid #30363d; text-align:center; height:180px;">
                     <div style="font-size:2.2rem; margin-bottom:10px;">🕓</div>
                     <div style="font-weight:800; font-size:16px; color:#40E0D0; margin-bottom:8px;">Riwayat Kasus</div>
                     <div style="color:#8b949e; font-size:14px; line-height:1.6;">Lihat kembali semua hasil tes yang pernah dilakukan <br> </div>
@@ -855,7 +901,7 @@ def main():
                     
                     # --- HEADER HASIL (HERO SECTION) ---
                     st.markdown(f"""
-                    <div style="background: linear-gradient(135deg, #161b22 0%, #0f3460 100%); padding: 40px; border-radius: 20px; border: 2px solid #40E0D0; text-align: center; margin-top: 20px; margin-bottom: 30px; max-width: 1100px; margin-left: auto; margin-right: auto;">
+                    <div class="hero-result-card" style="background: linear-gradient(135deg, #161b22 0%, #0f3460 100%); padding: 40px; border-radius: 20px; border: 2px solid #40E0D0; text-align: center; margin-top: 20px; margin-bottom: 30px; max-width: 1100px; margin-left: auto; margin-right: auto;">
                         <p style="color: #40E0D0; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 2px;">Tipe Kepribadian Anda Adalah</p>
                         <h1 style="margin:0; font-size: 5rem; color: #ffffff; line-height: 1;">{r['mbti']}</h1>
                         <h2 style="margin:0; color: #40E0D0; font-size: 2rem; font-weight: 500;">{info['nama']}</h2>
@@ -1067,7 +1113,7 @@ def main():
                 st.markdown("#### 📊 Bar Chart — Jumlah per Tipe MBTI")
                 components.html(f"""
 <!DOCTYPE html><html><body style="background:transparent">
-<canvas id="bar" width="800" height="350"></canvas>
+<div style="height: 350px; width: 100%;"><canvas id="bar"></canvas></div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 new Chart(document.getElementById('bar'), {{
@@ -1085,7 +1131,8 @@ new Chart(document.getElementById('bar'), {{
     }}]
   }},
   options: {{
-    responsive: false,
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {{ legend: {{ display: false }} }},
     scales: {{ y: {{ beginAtZero: true, ticks: {{ stepSize: 1 }} }} }}
   }}
@@ -1097,7 +1144,7 @@ new Chart(document.getElementById('bar'), {{
                 st.markdown("#### 🥧 Pie Chart — Proporsi MBTI")
                 components.html(f"""
 <!DOCTYPE html><html><body style="background:transparent">
-<canvas id="pie" width="500" height="400"></canvas>
+<div style="height: 400px; width: 100%;"><canvas id="pie"></canvas></div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 new Chart(document.getElementById('pie'), {{
@@ -1113,7 +1160,7 @@ new Chart(document.getElementById('pie'), {{
       ]
     }}]
   }},
-  options: {{ responsive: false }}
+  options: {{ responsive: true, maintainAspectRatio: false }}
 }});
 </script></body></html>
                 """, height=430)
@@ -1122,7 +1169,7 @@ new Chart(document.getElementById('pie'), {{
                 st.markdown("#### 🕸️ Radar Chart — Distribusi 16 Tipe MBTI")
                 components.html(f"""
 <!DOCTYPE html><html><body style="background:transparent">
-<canvas id="radar" width="500" height="500"></canvas>
+<div style="height: 500px; width: 100%;"><canvas id="radar"></canvas></div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 new Chart(document.getElementById('radar'), {{
@@ -1138,7 +1185,8 @@ new Chart(document.getElementById('radar'), {{
     }}]
   }},
   options: {{
-    responsive: false,
+    responsive: true,
+    maintainAspectRatio: false,
     scales: {{ r: {{ beginAtZero: true, ticks: {{ stepSize: 1 }} }} }}
   }}
 }});
