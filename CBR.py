@@ -408,6 +408,7 @@ def run_cbr(user_answers):
             best_match = mbti_type
     return best_match
 
+
 def show_radar_chart(user_scores, mbti_type):
     components.html(f"""
     <!DOCTYPE html>
@@ -482,95 +483,20 @@ def main():
         max-width: 1300px !important;
         margin-left: auto !important;
         margin-right: auto !important;
-        box-sizing: border-box !important;
     }
-
-    /* ── Tablet (≤ 992px) ── */
     @media (max-width: 992px) {
-        .main .block-container {
-            padding: 2rem 1.5rem !important;
-        }
-        h1 { font-size: 2rem !important; }
-        h2 { font-size: 1.6rem !important; }
-        h3 { font-size: 1.3rem !important; }
-    }
-
-    /* ── Mobile (≤ 768px) ── */
-    @media (max-width: 768px) {
-        html, body, .stApp, [class*="css"] {
-            font-size: 14px !important;
-        }
-        .main .block-container {
-            padding: 1rem 0.75rem !important;
-            max-width: 100% !important;
-        }
-        h1 { font-size: 1.7rem !important; }
-        h2 { font-size: 1.4rem !important; }
-        h3 { font-size: 1.15rem !important; }
-        h4 { font-size: 1rem !important; }
-
-        /* Kolom otomatis stack jadi vertikal */
-        [data-testid="stHorizontalBlock"] {
-            flex-direction: column !important;
-            flex-wrap: wrap !important;
-            gap: 0.75rem !important;
-        }
-        [data-testid="stHorizontalBlock"] > div {
-            width: 100% !important;
-            min-width: 0 !important;
-            flex: 1 1 100% !important;
-        }
-    }
-
-    /* ── Small Mobile (≤ 480px) ── */
-    @media (max-width: 480px) {
-        html, body, .stApp, [class*="css"] {
-            font-size: 13px !important;
-            line-height: 1.6 !important;
-        }
-        .main .block-container {
-            padding: 0.75rem 0.5rem !important;
-        }
-        h1 { font-size: 1.4rem !important; }
-        h2 { font-size: 1.2rem !important; }
-        h3 { font-size: 1.05rem !important; }
+        .main .block-container { padding: 2rem 1.5rem !important; }
     }
 
     /* ── Headings ── */
-    h1 {
-        font-family: 'Poppins', sans-serif !important;
-        font-size: 2.4rem !important;
-        font-weight: 700 !important;
-        color: #40E0D0 !important;
-        margin-bottom: 0.4em !important;
-        word-break: break-word !important;
-    }
-    h2 {
-        font-family: 'Poppins', sans-serif !important;
-        font-size: 1.9rem !important;
-        font-weight: 600 !important;
-        color: #7ee8e0 !important;
-        word-break: break-word !important;
-    }
-    h3 {
-        font-family: 'Poppins', sans-serif !important;
-        font-size: 1.5rem !important;
-        font-weight: 600 !important;
-        color: #e6edf3 !important;
-    }
+    h1 { font-family: 'Poppins', sans-serif !important; font-size: 2.4rem !important; font-weight: 700 !important; color: #40E0D0 !important; margin-bottom: 0.4em !important; }
+    h2 { font-family: 'Poppins', sans-serif !important; font-size: 1.9rem !important; font-weight: 600 !important; color: #7ee8e0 !important; }
+    h3 { font-family: 'Poppins', sans-serif !important; font-size: 1.5rem !important; font-weight: 600 !important; color: #e6edf3 !important; }
     h4 { font-size: 1.2rem !important; font-weight: 700 !important; color: #e6edf3 !important; }
 
     /* ── Semua teks biasa ── */
     p, li, span, div {
         color: #e6edf3 !important;
-        word-break: break-word !important;
-    }
-
-    /* ── Global overflow guard ── */
-    * { box-sizing: border-box !important; }
-    img, iframe, canvas, video, embed {
-        max-width: 100% !important;
-        height: auto !important;
     }
 
     /* ── Sidebar ── */
@@ -579,15 +505,6 @@ def main():
         padding: 1rem 0.5rem !important;
         min-width: 240px !important;
         border-right: 1px solid #30363d !important;
-    }
-    @media (max-width: 768px) {
-        [data-testid="stSidebar"] {
-            min-width: 0 !important;
-            width: 100% !important;
-            padding: 0.5rem !important;
-            border-right: none !important;
-            border-bottom: 1px solid #30363d !important;
-        }
     }
 
     /* Styling Sidebar Toggle Button (Arrow) */
@@ -615,13 +532,13 @@ def main():
         margin-bottom: 12px !important;
         transition: all 0.3s ease !important;
         width: 100% !important;
-        display: block !important;
     }
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:hover {
         border-color: #40E0D0 !important;
         background-color: rgba(64, 224, 208, 0.05) !important;
         transform: translateX(5px);
     }
+    /* Highlight saat dipilih (Streamlit menggunakan div internal untuk selection) */
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] [data-testid="stWidgetLabel"] {
         color: #e6edf3 !important;
         font-weight: 600 !important;
@@ -633,8 +550,6 @@ def main():
         background-color: #161b22 !important;
         border-radius: 12px !important;
         padding: 6px !important;
-        flex-wrap: wrap !important;       /* tab wrap di layar sempit */
-        overflow-x: auto !important;
     }
     .stTabs [data-baseweb="tab"] {
         font-size: 16px !important;
@@ -644,23 +559,10 @@ def main():
         font-family: 'Nunito', sans-serif !important;
         color: #8b949e !important;
         background: transparent !important;
-        white-space: nowrap !important;
     }
     .stTabs [aria-selected="true"] {
         background: #40E0D0 !important;
         color: #0d1117 !important;
-    }
-    @media (max-width: 768px) {
-        .stTabs [data-baseweb="tab"] {
-            font-size: 13px !important;
-            padding: 8px 12px !important;
-        }
-    }
-    @media (max-width: 480px) {
-        .stTabs [data-baseweb="tab"] {
-            font-size: 11px !important;
-            padding: 7px 9px !important;
-        }
     }
 
     /* ── Tombol ── */
@@ -674,21 +576,11 @@ def main():
         background: linear-gradient(135deg, #40E0D0, #0f3460) !important;
         color: #ffffff !important;
         border: none !important;
-        max-width: 100% !important;
-        white-space: normal !important;
-        word-break: break-word !important;
     }
     .stButton > button:hover, .stDownloadButton > button:hover, .stFormSubmitButton > button:hover {
         transform: translateY(-2px) !important;
         box-shadow: 0 6px 20px rgba(64,224,208,0.35) !important;
         opacity: 0.92 !important;
-    }
-    @media (max-width: 768px) {
-        .stButton > button, .stDownloadButton > button, .stFormSubmitButton > button {
-            font-size: 14px !important;
-            padding: 0.5rem 1rem !important;
-            width: 100% !important;        /* full-width di mobile */
-        }
     }
 
     /* ── Input, number, selectbox ── */
@@ -700,7 +592,6 @@ def main():
         background-color: #161b22 !important;
         color: #e6edf3 !important;
         border: 1px solid #30363d !important;
-        width: 100% !important;
     }
     .stTextInput input:focus, .stNumberInput input:focus {
         border-color: #40E0D0 !important;
@@ -713,23 +604,10 @@ def main():
         border-radius: 10px !important;
         font-size: 16px !important;
     }
-    @media (max-width: 768px) {
-        .stTextInput input, .stNumberInput input,
-        .stSelectbox > div > div {
-            font-size: 14px !important;
-            padding: 9px 11px !important;
-        }
-    }
 
     /* ── Slider ── */
     .stSlider { padding-top: 10px !important; padding-bottom: 18px !important; }
-    .stSlider label {
-        font-size: 16px !important;
-        font-weight: 600 !important;
-        color: #e6edf3 !important;
-        white-space: normal !important;   /* label tidak terpotong */
-        word-break: break-word !important;
-    }
+    .stSlider label { font-size: 16px !important; font-weight: 600 !important; color: #e6edf3 !important; }
     .stSlider [data-baseweb="slider"] [role="slider"] {
         background: #40E0D0 !important;
         border: 3px solid #ffffff !important;
@@ -742,13 +620,6 @@ def main():
     .stSlider [data-baseweb="slider"] div[data-testid="stSliderTrack"] > div:nth-child(2) {
         background: #40E0D0 !important;
     }
-    @media (max-width: 768px) {
-        .stSlider label { font-size: 13px !important; }
-        .stSlider [data-baseweb="slider"] [role="slider"] {
-            width: 18px !important;
-            height: 18px !important;
-        }
-    }
 
     /* ── Expander ── */
     .streamlit-expanderHeader {
@@ -760,7 +631,6 @@ def main():
         background-color: #161b22 !important;
         color: #e6edf3 !important;
         border: 1px solid #30363d !important;
-        word-break: break-word !important;
     }
     .streamlit-expanderContent {
         padding: 16px 20px !important;
@@ -771,17 +641,10 @@ def main():
         border: 1px solid #30363d !important;
         border-top: none !important;
     }
-    @media (max-width: 768px) {
-        .streamlit-expanderHeader { font-size: 14px !important; padding: 11px 13px !important; }
-        .streamlit-expanderContent { font-size: 13px !important; padding: 12px 13px !important; }
-    }
 
     /* ── Alert boxes ── */
     .stAlert { font-size: 16px !important; padding: 14px 20px !important; border-radius: 12px !important; }
     [data-testid="stNotification"] { background-color: #161b22 !important; color: #e6edf3 !important; }
-    @media (max-width: 768px) {
-        .stAlert { font-size: 13px !important; padding: 11px 14px !important; }
-    }
 
     /* ── Form container ── */
     [data-testid="stForm"] {
@@ -791,17 +654,6 @@ def main():
         border: 1px solid #30363d !important;
         margin-bottom: 1.5rem !important;
     }
-    @media (max-width: 768px) {
-        [data-testid="stForm"] {
-            padding: 16px 14px !important;
-            border-radius: 12px !important;
-        }
-    }
-    @media (max-width: 480px) {
-        [data-testid="stForm"] {
-            padding: 12px 10px !important;
-        }
-    }
 
     /* ── Label ── */
     label, .stRadio label, .stCheckbox label {
@@ -810,9 +662,6 @@ def main():
         font-family: 'Nunito', sans-serif !important;
         color: #e6edf3 !important;
     }
-    @media (max-width: 768px) {
-        label, .stRadio label, .stCheckbox label { font-size: 13px !important; }
-    }
 
     /* ── Markdown ── */
     .stMarkdown p, .stMarkdown li, .stMarkdown span {
@@ -820,26 +669,26 @@ def main():
         line-height: 1.8 !important;
         color: #e6edf3 !important;
     }
-    @media (max-width: 768px) {
-        .stMarkdown p, .stMarkdown li, .stMarkdown span { font-size: 13px !important; }
-    }
 
     /* ── Dataframe ── */
     .dataframe, [data-testid="stDataFrame"] {
         font-size: 15px !important;
         background-color: #161b22 !important;
         color: #e6edf3 !important;
-        overflow-x: auto !important;    /* scroll horizontal di mobile */
-        max-width: 100% !important;
-        display: block !important;
-    }
-    @media (max-width: 768px) {
-        .dataframe, [data-testid="stDataFrame"] { font-size: 12px !important; }
     }
 
     /* ── Spacing ── */
     .element-container { margin-bottom: 0.8rem !important; }
     </style>
+    """, unsafe_allow_html=True)
+
+    # ── SIDEBAR ──────────────────────────────────────────────────────
+    st.sidebar.markdown("""
+    <div style="text-align:center; padding: 10px 0 20px 0;">
+        <div style="font-size: 3rem;">🧠</div>
+        <div style="font-size: 1.4rem; font-weight: 800; color: #40E0D0; letter-spacing: 1px;">Pyth-MBTI</div>
+        <div style="font-size: 0.85rem; color: #8b949e; margin-top: 4px;">Psychology Detector</div>
+    </div>
     """, unsafe_allow_html=True)
     st.sidebar.markdown("---")
 
