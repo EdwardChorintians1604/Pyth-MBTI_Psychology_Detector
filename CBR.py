@@ -418,23 +418,22 @@ def show_radar_chart(user_scores, mbti_type):
     </head>
     <body style="background-color: transparent; margin: 0; padding: 0; overflow: hidden;">
         <style>
-            .chart-wrapper { 
+            .chart-wrapper {{
                 width: 100%; 
                 height: 420px; 
                 display: flex; 
                 justify-content: 
                 center; 
                 align-items: center; 
-            }
-            @media (max-width: 600px) {
-                .chart-wrapper { 
-                    height: 320px; 
-             
-                }
-                .chart-canvas { 
-                    max-width: 100% !important; height: auto !important; 
-                }
-            }
+            }}
+           <style>
+            .chart-wrapper {{ width: 100%; height: 420px; display: flex; justify-content: center; align-items: center; }}
+            @media (max-width: 600px) {{
+                .chart-wrapper {{ 
+                    height: 320px; }}
+                canvas {{ max-width: 100% !important; height: auto !important; }}
+            }}
+        </style>
         </style>
         <div class="chart-wrapper">
             <canvas id="chart"></canvas>
