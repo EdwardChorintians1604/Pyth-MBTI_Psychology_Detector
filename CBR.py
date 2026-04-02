@@ -1193,7 +1193,7 @@ def main():
                     st.success(f"Konten {edit_mbti} ({new_nama}) berhasil diperbarui!")
                     st.rerun()
 
-      # ── TAB 4: Grafik & Statistik ─────────────────────────────────
+        # ── TAB 4: Grafik & Statistik ─────────────────────────────────
         with admin_tab4:
             st.subheader("📊 Statistik Distribusi MBTI")
             conn = get_db_connection()
@@ -1206,6 +1206,7 @@ def main():
                 count_df = df_stat['mbti_result'].value_counts().reset_index()
                 count_df.columns = ['MBTI', 'Jumlah']
 
+                # Pastikan semua 16 tipe muncul meski 0
                 all_types = list(mbti_info.keys())
                 count_df = count_df.set_index('MBTI').reindex(all_types, fill_value=0).reset_index()
                 count_df.columns = ['MBTI', 'Jumlah']
@@ -1213,273 +1214,87 @@ def main():
                 labels = count_df['MBTI'].tolist()
                 values = count_df['Jumlah'].tolist()
 
-                # ── 1. Bar Chart ──────────────────────────────────────────
+                # 1. Bar Chart (Histogram)
                 st.markdown("#### 📊 Bar Chart — Jumlah per Tipe MBTI")
                 components.html(f"""
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-  * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-  html, body {{
-    background: transparent;
-    width: 100%;
-    overflow-x: hidden;
-  }}
-  .chart-wrapper {{
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    padding: 8px 4px;
-  }}
-  canvas {{
-    display: block;
-    width: 100% !important;
-    height: auto !important;
-  }}
-</style>
-</head>
-<body>
-<div class="chart-wrapper">
-  <canvas id="bar"></canvas>
-</div>
+<!DOCTYPE html><html><body style="background:transparent">
+<canvas id="bar" width="800" height="350"></canvas>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  const isMobile = window.innerWidth <= 640;
-  new Chart(document.getElementById('bar'), {{
-    type: 'bar',
-    data: {{
-      labels: {labels},
-      datasets: [{{
-        label: 'Jumlah',
-        data: {values},
-        backgroundColor: [
-          '#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF','#FF9F40',
-          '#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF','#FF9F40',
-          '#C9CBCF','#7BC8A4','#F4A261','#E76F51'
-        ],
-        borderRadius: 6,
-        borderSkipped: false
-      }}]
-    }},
-    options: {{
-      responsive: true,
-      maintainAspectRatio: true,
-      aspectRatio: isMobile ? 1.2 : 2.2,
-      plugins: {{
-        legend: {{ display: false }},
-        tooltip: {{
-          backgroundColor: '#161b22',
-          titleColor: '#40E0D0',
-          bodyColor: '#e6edf3',
-          borderColor: '#30363d',
-          borderWidth: 1,
-          padding: 10
-        }}
-      }},
-      scales: {{
-        x: {{
-          ticks: {{
-            color: '#8b949e',
-            font: {{ size: isMobile ? 9 : 12 }},
-            maxRotation: isMobile ? 90 : 45,
-            minRotation: isMobile ? 90 : 0
-          }},
-          grid: {{ color: 'rgba(48,54,61,0.6)' }}
-        }},
-        y: {{
-          beginAtZero: true,
-          ticks: {{
-            stepSize: 1,
-            color: '#8b949e',
-            font: {{ size: isMobile ? 9 : 12 }}
-          }},
-          grid: {{ color: 'rgba(48,54,61,0.6)' }}
-        }}
-      }}
-    }}
-  }});
-</script>
-</body>
-</html>
+new Chart(document.getElementById('bar'), {{
+  type: 'bar',
+  data: {{
+    labels: {labels},
+    datasets: [{{
+      label: 'Jumlah',
+      data: {values},
+      backgroundColor: [
+        '#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF','#FF9F40',
+        '#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF','#FF9F40',
+        '#C9CBCF','#7BC8A4','#F4A261','#E76F51'
+      ]
+    }}]
+  }},
+  options: {{
+    responsive: false,
+    plugins: {{ legend: {{ display: false }} }},
+    scales: {{ y: {{ beginAtZero: true, ticks: {{ stepSize: 1 }} }} }}
+  }}
+}});
+</script></body></html>
                 """, height=380)
 
-                # ── 2. Pie Chart ──────────────────────────────────────────
+                # 2. Pie Chart
                 st.markdown("#### 🥧 Pie Chart — Proporsi MBTI")
                 components.html(f"""
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-  * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-  html, body {{
-    background: transparent;
-    width: 100%;
-    overflow-x: hidden;
-  }}
-  .chart-wrapper {{
-    position: relative;
-    width: 100%;
-    max-width: 520px;
-    margin: 0 auto;
-    padding: 8px 4px;
-  }}
-  canvas {{
-    display: block;
-    width: 100% !important;
-    height: auto !important;
-  }}
-</style>
-</head>
-<body>
-<div class="chart-wrapper">
-  <canvas id="pie"></canvas>
-</div>
+<!DOCTYPE html><html><body style="background:transparent">
+<canvas id="pie" width="500" height="400"></canvas>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  const isMobile = window.innerWidth <= 640;
-  new Chart(document.getElementById('pie'), {{
-    type: 'pie',
-    data: {{
-      labels: {labels},
-      datasets: [{{
-        data: {values},
-        backgroundColor: [
-          '#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF','#FF9F40',
-          '#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF','#FF9F40',
-          '#C9CBCF','#7BC8A4','#F4A261','#E76F51'
-        ],
-        borderColor: '#0d1117',
-        borderWidth: 2
-      }}]
-    }},
-    options: {{
-      responsive: true,
-      maintainAspectRatio: true,
-      aspectRatio: isMobile ? 1 : 1.4,
-      plugins: {{
-        legend: {{
-          display: true,
-          position: isMobile ? 'bottom' : 'right',
-          labels: {{
-            color: '#e6edf3',
-            font: {{ size: isMobile ? 10 : 12 }},
-            padding: isMobile ? 8 : 14,
-            boxWidth: isMobile ? 12 : 16
-          }}
-        }},
-        tooltip: {{
-          backgroundColor: '#161b22',
-          titleColor: '#40E0D0',
-          bodyColor: '#e6edf3',
-          borderColor: '#30363d',
-          borderWidth: 1,
-          padding: 10
-        }}
-      }}
-    }}
-  }});
-</script>
-</body>
-</html>
+new Chart(document.getElementById('pie'), {{
+  type: 'pie',
+  data: {{
+    labels: {labels},
+    datasets: [{{
+      data: {values},
+      backgroundColor: [
+        '#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF','#FF9F40',
+        '#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF','#FF9F40',
+        '#C9CBCF','#7BC8A4','#F4A261','#E76F51'
+      ]
+    }}]
+  }},
+  options: {{ responsive: false }}
+}});
+</script></body></html>
                 """, height=430)
 
-                # ── 3. Radar Chart ────────────────────────────────────────
+                # 3. Radar / Polygon Chart
                 st.markdown("#### 🕸️ Radar Chart — Distribusi 16 Tipe MBTI")
                 components.html(f"""
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-  * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-  html, body {{
-    background: transparent;
-    width: 100%;
-    overflow-x: hidden;
-  }}
-  .chart-wrapper {{
-    position: relative;
-    width: 100%;
-    max-width: 560px;
-    margin: 0 auto;
-    padding: 8px 4px;
-  }}
-  canvas {{
-    display: block;
-    width: 100% !important;
-    height: auto !important;
-  }}
-</style>
-</head>
-<body>
-<div class="chart-wrapper">
-  <canvas id="radar"></canvas>
-</div>
+<!DOCTYPE html><html><body style="background:transparent">
+<canvas id="radar" width="500" height="500"></canvas>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  const isMobile = window.innerWidth <= 640;
-  new Chart(document.getElementById('radar'), {{
-    type: 'radar',
-    data: {{
-      labels: {labels},
-      datasets: [{{
-        label: 'Jumlah Kepribadian',
-        data: {values},
-        backgroundColor: 'rgba(64,224,208,0.15)',
-        borderColor: '#40E0D0',
-        borderWidth: 2,
-        pointBackgroundColor: '#40E0D0',
-        pointBorderColor: '#0d1117',
-        pointRadius: isMobile ? 3 : 5,
-        pointHoverRadius: isMobile ? 5 : 7
-      }}]
-    }},
-    options: {{
-      responsive: true,
-      maintainAspectRatio: true,
-      aspectRatio: isMobile ? 1 : 1.3,
-      plugins: {{
-        legend: {{
-          labels: {{
-            color: '#e6edf3',
-            font: {{ size: isMobile ? 11 : 13 }}
-          }}
-        }},
-        tooltip: {{
-          backgroundColor: '#161b22',
-          titleColor: '#40E0D0',
-          bodyColor: '#e6edf3',
-          borderColor: '#30363d',
-          borderWidth: 1,
-          padding: 10
-        }}
-      }},
-      scales: {{
-        r: {{
-          beginAtZero: true,
-          ticks: {{
-            stepSize: 1,
-            color: '#8b949e',
-            backdropColor: 'transparent',
-            font: {{ size: isMobile ? 8 : 11 }}
-          }},
-          pointLabels: {{
-            color: '#c9d1d9',
-            font: {{ size: isMobile ? 8 : 11 }}
-          }},
-          grid: {{ color: 'rgba(48,54,61,0.7)' }},
-          angleLines: {{ color: 'rgba(48,54,61,0.7)' }}
-        }}
-      }}
-    }}
-  }});
-</script>
-</body>
-</html>
-                """, height=500)
+new Chart(document.getElementById('radar'), {{
+  type: 'radar',
+  data: {{
+    labels: {labels},
+    datasets: [{{
+      label: 'Jumlah Kepribadian',
+      data: {values},
+      backgroundColor: 'rgba(64,224,208,0.2)',
+      borderColor: '#40E0D0',
+      pointBackgroundColor: '#40E0D0'
+    }}]
+  }},
+  options: {{
+    responsive: false,
+    scales: {{ r: {{ beginAtZero: true, ticks: {{ stepSize: 1 }} }} }}
+  }}
+}});
+</script></body></html>
+                """, height=530)
 
                 # 4. Tabel Ringkasan
                 st.markdown("#### 📋 Tabel Ringkasan")
